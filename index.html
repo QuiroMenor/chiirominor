@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Chiirominor · Reservas</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Chiirominor">
+  <meta name="theme-color" content="#1a1205">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%231a1205'/%3E%3Ctext x='60' y='78' font-size='58' text-anchor='middle' font-family='Georgia,serif' fill='%23c9a84c'%3E✦%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark:    #1a1205;
+      --dark2:   #2c2010;
+      --gold:    #c9a84c;
+      --gold-lt: #e8d48a;
+      --cream:   #f5f0e8;
+      --muted:   #8a7d65;
+      --border:  rgba(201,168,76,0.2);
+      --radius:  16px;
+      --radius-sm: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Jost', sans-serif; background: var(--dark); min-height: 100vh; color: var(--cream); overflow-x: hidden; }
+    #app { max-width: 430px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+    .hero { padding: 56px 24px 32px; background: linear-gradient(170deg, #1a1205 0%, #2c2010 50%, #1a1205 100%); position: relative; overflow: hidden; }
+    .hero::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; border:1px solid rgba(201,168,76,0.12); }
+    .hero::after  { content:''; position:absolute; bottom:-40px; left:-40px; width:160px; height:160px; border-radius:50%; border:1px solid rgba(201,168,76,0.08); }
+    .hero-eyebrow { font-size:10px; font-weight:400; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; opacity:0.8; }
+    .hero-title   { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:300; color:var(--cream); line-height:1.1; margin-bottom:6px; }
+    .hero-title em { font-style:italic; color:var(--gold-lt); }
+    .hero-sub     { font-size:12px; font-weight:300; color:var(--muted); letter-spacing:1px; }
+
+    .steps { display:flex; gap:6px; padding:20px 24px 0; }
+    .step-dot { height:2px; flex:1; border-radius:2px; background:rgba(201,168,76,0.15); transition:background 0.3s; }
+    .step-dot.active { background:var(--gold); }
+    .step-dot.done   { background:rgba(201,168,76,0.4); }
+
+    .content { flex:1; padding:24px 24px 32px; }
+    .section-label { font-size:9px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:0.7; margin-bottom:14px; }
+    .back-btn { background:none; border:none; color:var(--muted); font-size:12px; font-family:'Jost',sans-serif; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; gap:6px; margin-bottom:20px; padding:0; transition:color 0.2s; }
+    .back-btn:hover { color:var(--cream); }
+
+    .plan-card { border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.02); position:relative; overflow:hidden; }
+    .plan-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(201,168,76,0.06) 0%,transparent 60%); opacity:0; transition:opacity 0.2s; }
+    .plan-card:hover::before { opacity:1; }
+    .plan-card.selected { border-color:var(--gold); background:rgba(201,168,76,0.06); }
+    .plan-card.selected::before { opacity:1; }
+    .plan-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+    .plan-name { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; color:var(--cream); margin-bottom:4px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .plan-badge { font-family:'Jost',sans-serif; font-size:9px; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; padding:3px 8px; border-radius:20px; border:1px solid var(--gold); color:var(--gold); }
+    .plan-desc  { font-size:12px; font-weight:300; color:var(--muted); line-height:1.6; }
+    .plan-price { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--gold-lt); white-space:nowrap; }
+    .plan-dur   { font-size:10px; font-weight:300; color:var(--muted); text-align:right; margin-top:2px; letter-spacing:0.5px; }
+
+    .month-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .month-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:400; color:var(--cream); }
+    .nav-btn { background:none; border:1px solid var(--border); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); font-size:16px; transition:all 0.15s; }
+    .nav-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+    .day-label { text-align:center; font-size:9px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:var(--muted); padding:6px 0; }
+    .date-cell { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:8px; cursor:pointer; font-size:13px; font-weight:300; color:var(--cream); transition:all 0.15s; border:1px solid transparent; }
+    .date-cell:hover:not(.disabled) { border-color:var(--border); background:rgba(201,168,76,0.06); }
+    .date-cell.disabled { opacity:0.2; cursor:not-allowed; color:var(--muted); }
+    .date-cell.today { border-color:rgba(201,168,76,0.35); }
+    .date-cell.selected-date { background:var(--gold); color:var(--dark); font-weight:500; border-color:var(--gold); }
+
+    .time-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px; }
+    .time-btn { border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 4px; text-align:center; cursor:pointer; font-size:13px; font-weight:400; color:var(--cream); background:rgba(255,255,255,0.02); transition:all 0.15s; font-family:'Jost',sans-serif; }
+    .time-btn:hover { border-color:var(--gold); color:var(--gold-lt); }
+    .time-btn.selected-time { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:500; }
+    .time-btn.ocupado { opacity:0.25; cursor:not-allowed; text-decoration:line-through; }
+
+    .form-group { margin-bottom:14px; }
+    .form-label { display:block; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .form-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 16px; font-size:14px; font-weight:300; font-family:'Jost',sans-serif; color:var(--cream); outline:none; transition:border-color 0.2s; }
+    .form-input::placeholder { color:var(--muted); opacity:0.6; }
+    .form-input:focus { border-color:var(--gold); }
+
+    .summary-box { border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; background:rgba(201,168,76,0.04); margin:16px 0 0; }
+    .summary-row { display:flex; justify-content:space-between; align-items:flex-start; padding:6px 0; border-bottom:1px solid rgba(201,168,76,0.08); }
+    .summary-row:last-child { border-bottom:none; }
+    .sum-label { font-size:11px; font-weight:400; color:var(--muted); letter-spacing:0.5px; }
+    .sum-val   { font-size:13px; font-weight:400; color:var(--cream); text-align:right; max-width:180px; line-height:1.4; }
+
+    .main-btn { width:100%; padding:16px; background:var(--gold); color:var(--dark); border:none; border-radius:var(--radius); font-size:13px; font-weight:500; font-family:'Jost',sans-serif; letter-spacing:2px; text-transform:uppercase; cursor:pointer; margin-top:20px; transition:opacity 0.2s, transform 0.1s; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .main-btn:hover:not(:disabled) { opacity:0.88; }
+    .main-btn:active:not(:disabled) { transform:scale(0.98); }
+    .main-btn:disabled { opacity:0.25; cursor:not-allowed; }
+
+    .success-screen { display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 24px 32px; }
+    .success-icon  { width:72px; height:72px; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:28px; }
+    .success-title { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:var(--cream); margin-bottom:10px; }
+    .success-sub   { font-size:13px; font-weight:300; color:var(--muted); line-height:1.7; margin-bottom:32px; max-width:280px; }
+    .new-btn { background:none; border:none; color:var(--muted); font-size:12px; font-family:'Jost',sans-serif; letter-spacing:1px; cursor:pointer; margin-top:16px; text-transform:uppercase; transition:color 0.2s; }
+    .new-btn:hover { color:var(--cream); }
+
+    .install-banner { margin:16px 24px 0; padding:12px 16px; background:rgba(201,168,76,0.07); border:1px solid var(--border); border-radius:var(--radius-sm); display:flex; gap:10px; align-items:flex-start; }
+    .install-text { font-size:11px; font-weight:300; color:var(--muted); line-height:1.6; }
+    .install-text strong { color:var(--cream); font-weight:500; }
+    .install-close { background:none; border:none; color:var(--muted); cursor:pointer; font-size:18px; padding:0 0 0 8px; flex-shrink:0; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="hero">
+    <div class="hero-eyebrow">Centro de masajes</div>
+    <div class="hero-title">Chiiro<em>minor</em></div>
+    <div class="hero-sub">Reserva tu sesión · Lunes a sábado</div>
+  </div>
+
+  <div class="install-banner" id="install-banner" style="display:none">
+    <div style="font-size:18px;flex-shrink:0">📲</div>
+    <div class="install-text"><strong>Instala esta app:</strong> toca compartir (<strong>⎦↑⎤</strong>) y selecciona <strong>"Añadir a pantalla de inicio"</strong></div>
+    <button class="install-close" onclick="document.getElementById('install-banner').style.display='none'">×</button>
+  </div>
+
+  <!-- PASO 1: PLANES -->
+  <div id="screen-plans">
+    <div class="steps" style="margin-top:16px">
+      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="content">
+      <div class="section-label">Elige tu plan</div>
+      <div id="plans-container"></div>
+      <button class="main-btn" id="btn-plan" onclick="goToDate()" disabled>Elegir fecha →</button>
+    </div>
+  </div>
+
+  <!-- PASO 2: FECHA Y HORA -->
+  <div id="screen-date" style="display:none">
+    <div class="steps" style="margin-top:16px">
+      <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="content">
+      <button class="back-btn" onclick="showScreen('plans')">← Volver</button>
+      <div class="section-label">Elige una fecha</div>
+      <div class="month-nav">
+        <button class="nav-btn" onclick="prevMonth()">‹</button>
+        <span class="month-title" id="month-label"></span>
+        <button class="nav-btn" onclick="nextMonth()">›</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div style="margin-top:24px">
+        <div class="section-label">Hora disponible</div>
+        <div class="time-grid" id="time-grid"></div>
+      </div>
+      <button class="main-btn" id="btn-date" onclick="goToInfo()" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 3: DATOS -->
+  <div id="screen-info" style="display:none">
+    <div class="steps" style="margin-top:16px">
+      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
+    </div>
+    <div class="content">
+      <button class="back-btn" onclick="showScreen('date')">← Volver</button>
+      <div class="section-label">Tus datos</div>
+      <div class="form-group">
+        <label class="form-label" for="inp-name">Nombre completo</label>
+        <input class="form-input" id="inp-name" type="text" placeholder="Ej: María García" oninput="checkInfo()">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-phone">Teléfono</label>
+        <input class="form-input" id="inp-phone" type="tel" placeholder="Ej: 612 345 678" oninput="checkInfo()">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-notes">Notas (opcional)</label>
+        <input class="form-input" id="inp-notes" type="text" placeholder="Alergias, preferencias...">
+      </div>
+      <div id="summary-box"></div>
+      <button class="main-btn" id="btn-info" onclick="goToConfirm()" disabled>Confirmar reserva →</button>
+    </div>
+  </div>
+
+  <!-- PASO 4: ÉXITO -->
+  <div id="screen-success" style="display:none">
+    <div class="success-screen">
+      <div class="success-icon">✦</div>
+      <div class="success-title">¡Todo listo!</div>
+      <div class="success-sub" id="success-text"></div>
+      <button class="new-btn" onclick="resetApp()">+ Nueva reserva</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================================================
+   DATOS EDITABLES
+   ================================================ */
+
+/* Clave compartida con el panel de administración.
+   DEBE ser la misma en ambos archivos.            */
+const STORAGE_KEY = 'chiirominor_reservas';
+
+/* ----- PLANES ---------------------------------
+   Edita nombre, descripción, precio, duración.
+   ------------------------------------------------ */
+const PLANES = [
+  { nombre:'Masaje relajante',    desc:'Alivio del estrés con aceites aromáticos y música suave. Perfecto para descansar.',           precio:'45 €', duracion:'60 min', durMins:60,  badge:'' },
+  { nombre:'Masaje deportivo',    desc:'Recuperación muscular profunda. Ideal tras ejercicio intenso o para aliviar contracturas.',    precio:'55 €', duracion:'60 min', durMins:60,  badge:'Popular' },
+  { nombre:'Experiencia premium', desc:'Masaje completo con piedras calientes, aromaterapia y envoltura corporal relajante.',          precio:'85 €', duracion:'90 min', durMins:90,  badge:'Premium' }
+];
+
+/* ----- HORARIOS --------------------------------
+   Añade o elimina horas "HH:MM".
+   ------------------------------------------------ */
+const HORARIOS = ['09:00','10:00','11:00','12:00','13:00','16:00','17:00','18:00','19:00'];
+
+/* ----- DÍAS CERRADOS --------------------------
+   0=Domingo, 6=Sábado. Por defecto solo domingo.
+   ------------------------------------------------ */
+const DIAS_CERRADOS = [0];
+
+/* ================================================
+   FIN DATOS EDITABLES
+   ================================================ */
+
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DIAS  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+
+let selPlan=null, selDate=null, selTime=null, calYear, calMonth;
+
+function getReservas() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveReserva(r) {
+  const all = getReservas();
+  all.push(r);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+}
+function horasOcupadas(fecha) {
+  if (!fecha) return [];
+  const key = fecha.toISOString().slice(0,10);
+  return getReservas().filter(r => r.fecha === key).map(r => r.hora);
+}
+
+function init() {
+  const hoy = new Date();
+  calYear = hoy.getFullYear(); calMonth = hoy.getMonth();
+  renderPlanes(); renderCal(); renderHorarios();
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = ('standalone' in navigator) && navigator.standalone;
+  if (isIOS && !isStandalone) document.getElementById('install-banner').style.display = 'flex';
+}
+
+function renderPlanes() {
+  const c = document.getElementById('plans-container');
+  c.innerHTML = '';
+  PLANES.forEach((p,i) => {
+    const d = document.createElement('div');
+    d.className = 'plan-card'; d.id = 'plan-'+i; d.onclick = () => elegirPlan(i);
+    d.innerHTML = `<div class="plan-row"><div style="flex:1"><div class="plan-name">${p.nombre}${p.badge?`<span class="plan-badge">${p.badge}</span>`:''}</div><div class="plan-desc">${p.desc}</div></div><div style="text-align:right;min-width:64px;padding-left:12px"><div class="plan-price">${p.precio}</div><div class="plan-dur">${p.duracion}</div></div></div>`;
+    c.appendChild(d);
+  });
+}
+
+function elegirPlan(i) {
+  selPlan = i;
+  document.querySelectorAll('.plan-card').forEach((c,idx) => c.classList.toggle('selected', idx===i));
+  document.getElementById('btn-plan').disabled = false;
+}
+
+function showScreen(n) {
+  ['plans','date','info','success'].forEach(id => document.getElementById('screen-'+id).style.display = id===n?'block':'none');
+  window.scrollTo(0,0);
+}
+function goToDate()  { showScreen('date'); }
+function goToInfo()  { if(selDate&&selTime){ renderResumen(); showScreen('info'); } }
+function goToConfirm() {
+  const nombre = document.getElementById('inp-name').value.trim();
+  const tlf    = document.getElementById('inp-phone').value.trim();
+  if (!nombre||!tlf) return;
+  const p  = PLANES[selPlan];
+  const key = selDate.toISOString().slice(0,10);
+  saveReserva({ id: Date.now(), fecha: key, hora: selTime, plan: p.nombre, precio: p.precio, duracion: p.duracion, nombre, tlf, notas: document.getElementById('inp-notes').value.trim() });
+  const ds = selDate.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('success-text').innerHTML = `<strong style="color:#f5f0e8">${nombre}</strong>, tu cita para<br><strong style="color:#f5f0e8">${p.nombre}</strong><br>el ${ds} a las <strong style="color:#f5f0e8">${selTime}</strong><br>está confirmada. ¡Hasta pronto!`;
+  showScreen('success');
+}
+function checkInfo() {
+  document.getElementById('btn-info').disabled = !(document.getElementById('inp-name').value.trim() && document.getElementById('inp-phone').value.trim());
+}
+function renderResumen() {
+  const p = PLANES[selPlan];
+  const ds = selDate.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('summary-box').innerHTML = `<div class="summary-box"><div class="summary-row"><span class="sum-label">Plan</span><span class="sum-val">${p.nombre}</span></div><div class="summary-row"><span class="sum-label">Precio</span><span class="sum-val">${p.precio}</span></div><div class="summary-row"><span class="sum-label">Duración</span><span class="sum-val">${p.duracion}</span></div><div class="summary-row"><span class="sum-label">Fecha</span><span class="sum-val">${ds}</span></div><div class="summary-row"><span class="sum-label">Hora</span><span class="sum-val">${selTime}</span></div></div>`;
+}
+
+function renderCal() {
+  document.getElementById('month-label').textContent = MESES[calMonth]+' '+calYear;
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+  DIAS.forEach(d => { const el=document.createElement('div'); el.className='day-label'; el.textContent=d; grid.appendChild(el); });
+  let first = new Date(calYear,calMonth,1).getDay();
+  first = first===0?6:first-1;
+  for(let i=0;i<first;i++){ const el=document.createElement('div'); el.className='date-cell disabled'; grid.appendChild(el); }
+  const total = new Date(calYear,calMonth+1,0).getDate();
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  for(let d=1;d<=total;d++){
+    const fecha=new Date(calYear,calMonth,d);
+    const el=document.createElement('div'); el.className='date-cell'; el.textContent=d;
+    if(DIAS_CERRADOS.includes(fecha.getDay())||fecha<hoy){ el.classList.add('disabled'); }
+    else {
+      if(fecha.getTime()===hoy.getTime()) el.classList.add('today');
+      if(selDate&&fecha.getTime()===selDate.getTime()) el.classList.add('selected-date');
+      el.onclick=()=>elegirFecha(fecha,el);
+    }
+    grid.appendChild(el);
+  }
+}
+function elegirFecha(fecha,el) {
+  selDate=fecha; selTime=null;
+  document.querySelectorAll('.date-cell.selected-date').forEach(c=>c.classList.remove('selected-date'));
+  el.classList.add('selected-date');
+  renderHorarios();
+  document.getElementById('btn-date').disabled=true;
+}
+function prevMonth(){ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCal(); }
+function nextMonth(){ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCal(); }
+
+function renderHorarios() {
+  const ocupadas = horasOcupadas(selDate);
+  const grid = document.getElementById('time-grid');
+  grid.innerHTML='';
+  HORARIOS.forEach(h => {
+    const btn=document.createElement('div');
+    const ocupado = ocupadas.includes(h);
+    btn.className='time-btn'+(selTime===h?' selected-time':'')+(ocupado?' ocupado':'');
+    btn.textContent=h;
+    if(!ocupado) btn.onclick=()=>elegirHora(h);
+    grid.appendChild(btn);
+  });
+}
+function elegirHora(h) {
+  selTime=h;
+  document.querySelectorAll('.time-btn').forEach(b=>b.classList.toggle('selected-time',b.textContent===h));
+  document.getElementById('btn-date').disabled=!(selDate&&selTime);
+}
+function resetApp() {
+  selPlan=null;selDate=null;selTime=null;
+  document.getElementById('inp-name').value='';
+  document.getElementById('inp-phone').value='';
+  document.getElementById('inp-notes').value='';
+  document.getElementById('btn-plan').disabled=true;
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+  init(); showScreen('plans');
+}
+
+init();
+</script>
+</body>
+</html>
