@@ -11,518 +11,82 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --dark:#54352e;
-    --dark2:#3f2823;
-    --gold:#9d786b;
-    --gold-lt:#b08b7d;
-    --cream:#f4f4f4;
-    --muted:#8c746d;
-    --border:rgba(84,53,46,0.22);
-    --radius:10px;
-    --radius-sm:8px;
-    --danger:#c85b4e;
-  }
-
-  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-
-  body {
-    font-family:'Jost',sans-serif;
-    background:var(--cream);
-    min-height:100vh;
-    color:var(--dark);
-  }
-
-  #app {
-    max-width:430px;
-    margin:0 auto;
-    min-height:100vh;
-    background:var(--cream);
-  }
-
-  /* LOGIN */
-  .login-wrap {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    padding:32px 24px;
-    background:var(--dark);
-    color:#fff;
-  }
-
-  .login-icon {
-    font-family:'Cormorant Garamond',serif;
-    font-size:48px;
-    color:#fff;
-    margin-bottom:8px;
-  }
-
-  .login-title {
-    font-family:'Jost',sans-serif;
-    font-size:28px;
-    font-weight:400;
-    color:#fff;
-    margin-bottom:4px;
-  }
-
-  .login-sub {
-    font-size:12px;
-    color:rgba(255,255,255,0.75);
-    letter-spacing:1px;
-    margin-bottom:32px;
-  }
-
-  .login-input {
-    width:100%;
-    background:#fff;
-    border:1px solid rgba(255,255,255,0.35);
-    border-radius:var(--radius-sm);
-    padding:14px 18px;
-    font-size:16px;
-    font-family:'Jost',sans-serif;
-    color:var(--dark);
-    outline:none;
-    text-align:center;
-    letter-spacing:3px;
-    margin-bottom:12px;
-    transition:border-color 0.2s;
-  }
-
-  .login-input:focus {
-    border-color:#fff;
-  }
-
-  .login-btn {
-    width:100%;
-    padding:15px;
-    background:var(--gold);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius);
-    font-size:13px;
-    font-weight:500;
-    font-family:'Jost',sans-serif;
-    letter-spacing:1px;
-    text-transform:none;
-    cursor:pointer;
-    transition:opacity 0.2s;
-  }
-
-  .login-btn:hover { opacity:0.88; }
-
-  .login-error {
-    font-size:12px;
-    color:var(--danger);
-    margin-top:8px;
-    display:none;
-  }
-
-  /* HEADER PANEL */
-  .panel-header {
-    background:var(--dark);
-    padding:52px 24px 42px;
-    position:relative;
-    overflow:hidden;
-  }
-
-  .panel-header::before {
-    content:'';
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:-1px;
-    height:32px;
-    background:
-      linear-gradient(135deg, transparent 25px, var(--cream) 0) 0 0 / 78px 32px repeat-x,
-      linear-gradient(225deg, transparent 25px, var(--cream) 0) 39px 0 / 78px 32px repeat-x;
-  }
-
-  .ph-eyebrow {
-    font-size:13px;
-    letter-spacing:0;
-    text-transform:none;
-    color:#fff;
-    opacity:1;
-    margin-bottom:16px;
-  }
-
-  .ph-title {
-    font-family:'Jost',sans-serif;
-    font-size:34px;
-    line-height:1.28;
-    font-weight:400;
-    color:#fff;
-  }
-
-  .ph-logout {
-    position:absolute;
-    top:52px;
-    right:24px;
-    background:none;
-    border:1px solid rgba(255,255,255,0.5);
-    border-radius:4px;
-    padding:6px 12px;
-    font-size:11px;
-    font-family:'Jost',sans-serif;
-    color:#fff;
-    cursor:pointer;
-    letter-spacing:0;
-    transition:all 0.2s;
-  }
-
-  .ph-logout:hover {
-    background:#fff;
-    color:var(--dark);
-  }
-
-  /* STATS */
-  .stats-row {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    padding:28px 24px 0;
-  }
-
-  .stat-card {
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:14px 16px;
-  }
-
-  .stat-num {
-    font-family:'Jost',sans-serif;
-    font-size:28px;
-    font-weight:400;
-    color:var(--dark);
-    line-height:1;
-    margin-bottom:4px;
-  }
-
-  .stat-label {
-    font-size:10px;
-    font-weight:400;
-    color:var(--muted);
-    letter-spacing:1px;
-  }
-
-  /* CALENDARIO MINI */
-  .section { padding:20px 24px 0; }
-
-  .section-label {
-    font-size:13px;
-    font-weight:400;
-    letter-spacing:0;
-    text-transform:none;
-    color:#000;
-    opacity:1;
-    margin-bottom:14px;
-  }
-
-  .month-nav {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-  }
-
-  .month-title {
-    font-family:'Jost',sans-serif;
-    font-size:17px;
-    font-weight:400;
-    color:var(--dark);
-  }
-
-  .nav-btn {
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:4px;
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    color:var(--dark);
-    font-size:15px;
-    transition:all 0.15s;
-  }
-
-  .nav-btn:hover {
-    background:var(--dark);
-    color:#fff;
-  }
-
-  .cal-grid {
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:3px;
-  }
-
-  .day-lbl {
-    text-align:center;
-    font-size:8px;
-    font-weight:500;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:var(--muted);
-    padding:5px 0;
-  }
-
-  .cal-cell {
-    aspect-ratio:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    border-radius:4px;
-    cursor:pointer;
-    font-size:12px;
-    color:var(--dark);
-    transition:all 0.15s;
-    border:1px solid transparent;
-    position:relative;
-    gap:2px;
-  }
-
-  .cal-cell:hover:not(.cal-empty):not(.cal-past) {
-    background:rgba(84,53,46,0.08);
-    border-color:var(--border);
-  }
-
-  .cal-cell.cal-past {
-    opacity:0.25;
-    cursor:default;
-  }
-
-  .cal-cell.cal-today {
-    border-color:rgba(84,53,46,0.45);
-  }
-
-  .cal-cell.cal-active {
-    background:var(--dark);
-    color:#fff;
-    border-color:var(--dark);
-  }
-
-  .cal-cell.cal-active .cal-dot {
-    background:#fff !important;
-  }
-
-  .cal-dot-wrap { display:flex; gap:2px; }
-
-  .cal-dot {
-    width:4px;
-    height:4px;
-    border-radius:50%;
-    background:var(--gold);
-  }
-
-  .cal-empty { cursor:default; }
-
-  /* LISTADO DEL DÍA */
-  .day-header {
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    margin-bottom:14px;
-  }
-
-  .day-title {
-    font-family:'Jost',sans-serif;
-    font-size:20px;
-    font-weight:400;
-    color:var(--dark);
-  }
-
-  .day-count {
-    font-size:11px;
-    color:var(--muted);
-    letter-spacing:0.5px;
-  }
-
-  .reserva-card {
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px 18px;
-    margin-bottom:10px;
-    background:#fff;
-    position:relative;
-  }
-
-  .res-hora {
-    font-family:'Jost',sans-serif;
-    font-size:22px;
-    font-weight:400;
-    color:var(--dark);
-    margin-bottom:2px;
-  }
-
-  .res-plan {
-    font-size:13px;
-    font-weight:400;
-    color:#000;
-    margin-bottom:6px;
-  }
-
-  .res-row {
-    display:flex;
-    gap:6px;
-    align-items:center;
-    margin-bottom:3px;
-  }
-
-  .res-icon {
-    font-size:12px;
-    opacity:0.5;
-  }
-
-  .res-txt {
-    font-size:12px;
-    font-weight:300;
-    color:var(--muted);
-  }
-
-  .res-price {
-    position:absolute;
-    top:16px;
-    right:18px;
-    font-family:'Jost',sans-serif;
-    font-size:16px;
-    color:var(--dark);
-  }
-
-  .res-actions {
-    display:flex;
-    gap:8px;
-    margin-top:12px;
-  }
-
-  .res-btn {
-    flex:1;
-    padding:9px;
-    border-radius:var(--radius-sm);
-    font-size:11px;
-    font-weight:500;
-    font-family:'Jost',sans-serif;
-    letter-spacing:0;
-    text-transform:none;
-    cursor:pointer;
-    border:1px solid;
-    transition:all 0.15s;
-    text-align:center;
-  }
-
-  .res-btn-cal {
-    border-color:var(--gold);
-    color:#fff;
-    background:var(--gold);
-  }
-
-  .res-btn-cal:hover {
-    background:var(--dark);
-    border-color:var(--dark);
-  }
-
-  .res-btn-del {
-    border-color:rgba(200,91,78,0.4);
-    color:var(--danger);
-    background:transparent;
-  }
-
-  .res-btn-del:hover {
-    background:rgba(200,91,78,0.08);
-  }
-
-  .empty-day {
-    text-align:center;
-    padding:32px 0;
-  }
-
-  .empty-icon {
-    font-size:32px;
-    margin-bottom:10px;
-    opacity:0.3;
-  }
-
-  .empty-label {
-    font-size:13px;
-    color:var(--muted);
-  }
-
-  /* MODAL CONFIRMAR BORRAR */
-  .modal-overlay {
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.7);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:100;
-    padding:24px;
-  }
-
-  .modal-box {
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:24px;
-    width:100%;
-    max-width:320px;
-  }
-
-  .modal-title {
-    font-family:'Jost',sans-serif;
-    font-size:20px;
-    font-weight:400;
-    color:var(--dark);
-    margin-bottom:8px;
-  }
-
-  .modal-sub {
-    font-size:13px;
-    color:var(--muted);
-    line-height:1.6;
-    margin-bottom:20px;
-  }
-
-  .modal-btns {
-    display:flex;
-    gap:10px;
-  }
-
-  .modal-cancel {
-    flex:1;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    background:none;
-    color:var(--dark);
-    font-family:'Jost',sans-serif;
-    font-size:12px;
-    cursor:pointer;
-  }
-
-  .modal-del {
-    flex:1;
-    padding:12px;
-    border:1px solid rgba(200,91,78,0.5);
-    border-radius:var(--radius-sm);
-    background:rgba(200,91,78,0.1);
-    color:var(--danger);
-    font-family:'Jost',sans-serif;
-    font-size:12px;
-    cursor:pointer;
-  }
-</style>
+  <style>
+    :root { --dark:#1a1205; --dark2:#2c2010; --gold:#c9a84c; --gold-lt:#e8d48a; --cream:#f5f0e8; --muted:#8a7d65; --border:rgba(201,168,76,0.2); --radius:16px; --radius-sm:10px; --danger:#e05a5a; }
+    * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+    body { font-family:'Jost',sans-serif; background:var(--dark); min-height:100vh; color:var(--cream); }
+    #app { max-width:430px; margin:0 auto; min-height:100vh; }
+    .login-wrap  { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:32px 24px; }
+    .login-icon  { font-family:'Cormorant Garamond',serif; font-size:48px; color:var(--gold); margin-bottom:8px; }
+    .login-title { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; margin-bottom:4px; }
+    .login-sub   { font-size:12px; color:var(--muted); letter-spacing:1px; margin-bottom:32px; }
+    .login-input { width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 18px; font-size:16px; font-family:'Jost',sans-serif; color:var(--cream); outline:none; text-align:center; letter-spacing:3px; margin-bottom:12px; transition:border-color 0.2s; }
+    .login-input:focus { border-color:var(--gold); }
+    .login-btn   { width:100%; padding:15px; background:var(--gold); color:var(--dark); border:none; border-radius:var(--radius); font-size:13px; font-weight:500; font-family:'Jost',sans-serif; letter-spacing:2px; text-transform:uppercase; cursor:pointer; }
+    .login-error { font-size:12px; color:var(--danger); margin-top:10px; display:none; text-align:center; }
+    .panel-header { background:linear-gradient(170deg,#1a1205,#2c2010); padding:52px 24px 24px; position:relative; overflow:hidden; }
+    .panel-header::before { content:''; position:absolute; top:-50px; right:-50px; width:180px; height:180px; border-radius:50%; border:1px solid rgba(201,168,76,0.1); }
+    .ph-eyebrow { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:0.7; margin-bottom:4px; }
+    .ph-title   { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; }
+    .ph-logout  { position:absolute; top:52px; right:24px; background:none; border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:11px; font-family:'Jost',sans-serif; color:var(--muted); cursor:pointer; letter-spacing:1px; transition:all 0.2s; }
+    .ph-logout:hover { border-color:var(--gold); color:var(--gold); }
+    .ph-refresh { position:absolute; top:52px; right:82px; background:none; border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:15px; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+    .ph-refresh:hover { border-color:var(--gold); color:var(--gold); }
+    .stats-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:20px 24px 0; }
+    .stat-card  { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; }
+    .stat-num   { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:600; color:var(--gold-lt); line-height:1; margin-bottom:4px; }
+    .stat-label { font-size:10px; color:var(--muted); letter-spacing:1px; }
+    .section { padding:20px 24px 0; }
+    .section-label { font-size:9px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:0.7; margin-bottom:14px; }
+    .month-nav   { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .month-title { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--cream); }
+    .nav-btn { background:none; border:1px solid var(--border); border-radius:8px; width:30px; height:30px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); font-size:15px; transition:all 0.15s; }
+    .nav-btn:hover { border-color:var(--gold); color:var(--gold); }
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+    .day-lbl  { text-align:center; font-size:8px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:var(--muted); padding:5px 0; }
+    .cal-cell { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:7px; cursor:pointer; font-size:12px; color:var(--cream); transition:all 0.15s; border:1px solid transparent; gap:2px; }
+    .cal-cell:hover:not(.cal-empty):not(.cal-past) { background:rgba(201,168,76,0.08); border-color:var(--border); }
+    .cal-cell.cal-past   { opacity:0.25; cursor:default; }
+    .cal-cell.cal-today  { border-color:rgba(201,168,76,0.4); }
+    .cal-cell.cal-active { background:var(--gold); color:var(--dark); border-color:var(--gold); }
+    .cal-cell.cal-active .cal-dot { background:var(--dark) !important; }
+    .cal-dot-wrap { display:flex; gap:2px; }
+    .cal-dot { width:4px; height:4px; border-radius:50%; background:var(--gold); }
+    .cal-empty { cursor:default; }
+    .day-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; }
+    .day-title  { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--cream); }
+    .day-count  { font-size:11px; color:var(--muted); }
+    .reserva-card { border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; margin-bottom:10px; background:rgba(255,255,255,0.02); position:relative; }
+    .res-hora  { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--gold-lt); margin-bottom:2px; }
+    .res-plan  { font-size:13px; color:var(--cream); margin-bottom:8px; }
+    .res-price { position:absolute; top:16px; right:18px; font-family:'Cormorant Garamond',serif; font-size:16px; color:var(--gold); }
+    .res-row   { display:flex; gap:6px; align-items:center; margin-bottom:3px; }
+    .res-icon  { font-size:12px; opacity:0.5; }
+    .res-txt   { font-size:12px; font-weight:300; color:var(--muted); }
+    .res-actions { display:flex; gap:8px; margin-top:12px; }
+    .res-btn { flex:1; padding:9px; border-radius:var(--radius-sm); font-size:11px; font-weight:500; font-family:'Jost',sans-serif; letter-spacing:1px; text-transform:uppercase; cursor:pointer; border:1px solid; transition:all 0.15s; text-align:center; }
+    .res-btn-cal { border-color:var(--gold); color:var(--gold); background:transparent; }
+    .res-btn-cal:hover { background:rgba(201,168,76,0.1); }
+    .res-btn-del { border-color:rgba(224,90,90,0.4); color:var(--danger); background:transparent; }
+    .res-btn-del:hover { background:rgba(224,90,90,0.08); }
+    .empty-day   { text-align:center; padding:32px 0; }
+    .empty-icon  { font-size:32px; margin-bottom:10px; opacity:0.3; }
+    .empty-label { font-size:13px; color:var(--muted); }
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; z-index:100; padding:24px; }
+    .modal-box   { background:#2c2010; border:1px solid var(--border); border-radius:var(--radius); padding:24px; width:100%; max-width:320px; }
+    .modal-title { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--cream); margin-bottom:8px; }
+    .modal-sub   { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:20px; }
+    .modal-btns  { display:flex; gap:10px; }
+    .modal-cancel { flex:1; padding:12px; border:1px solid var(--border); border-radius:var(--radius-sm); background:none; color:var(--muted); font-family:'Jost',sans-serif; font-size:12px; cursor:pointer; }
+    .modal-del    { flex:1; padding:12px; border:1px solid rgba(224,90,90,0.5); border-radius:var(--radius-sm); background:rgba(224,90,90,0.1); color:var(--danger); font-family:'Jost',sans-serif; font-size:12px; cursor:pointer; }
+    .loading-overlay { position:fixed; inset:0; background:rgba(26,18,5,0.88); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:200; gap:16px; }
+    .spinner { width:36px; height:36px; border:2px solid rgba(201,168,76,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .loading-text { font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
+  </style>
 </head>
 <body>
 <div id="app">
-
-  <!-- LOGIN -->
   <div id="screen-login">
     <div class="login-wrap">
       <div class="login-icon">✦</div>
@@ -534,18 +98,14 @@
     </div>
   </div>
 
-  <!-- PANEL -->
   <div id="screen-panel" style="display:none">
     <div class="panel-header">
       <div class="ph-eyebrow">Panel de administración</div>
       <div class="ph-title">Chiiro<span style="font-style:italic;color:var(--gold-lt)">minor</span></div>
-      <button class="ph-logout" onclick="logout()">Salir</button>
+      <button class="ph-refresh" onclick="recargar()" title="Actualizar">↻</button>
+      <button class="ph-logout"  onclick="logout()">Salir</button>
     </div>
-
-    <!-- STATS -->
     <div class="stats-row" id="stats-row"></div>
-
-    <!-- CALENDARIO -->
     <div class="section" style="margin-top:20px">
       <div class="section-label">Calendario</div>
       <div class="month-nav">
@@ -555,22 +115,19 @@
       </div>
       <div class="cal-grid" id="admin-cal"></div>
     </div>
-
-    <!-- LISTADO DEL DÍA -->
-    <div class="section" style="margin-top:24px; padding-bottom:40px">
+    <div class="section" style="margin-top:24px;padding-bottom:40px">
       <div class="day-header">
-        <div class="day-title" id="day-title">Hoy</div>
+        <div class="day-title" id="day-title"></div>
         <div class="day-count" id="day-count"></div>
       </div>
       <div id="day-list"></div>
     </div>
   </div>
 
-  <!-- MODAL BORRAR -->
   <div class="modal-overlay" id="modal-del" style="display:none">
     <div class="modal-box">
       <div class="modal-title">Cancelar reserva</div>
-      <div class="modal-sub" id="modal-text">¿Seguro que quieres cancelar esta cita?</div>
+      <div class="modal-sub" id="modal-text"></div>
       <div class="modal-btns">
         <button class="modal-cancel" onclick="closeModal()">Mantener</button>
         <button class="modal-del"    onclick="confirmDelete()">Cancelar cita</button>
@@ -578,199 +135,113 @@
     </div>
   </div>
 
+  <div class="loading-overlay" id="loading" style="display:none">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loading-text">Cargando...</div>
+  </div>
 </div>
 
 <script>
+const SUPABASE_URL = 'https://uxztzrjthivtujmpwfzb.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_t_gvrWRb5ebhPfKLenDcjg_AmAPzQ92';
+
 /* ================================================
    DATOS EDITABLES
+   Cambia la contraseña por la que quieras
    ================================================ */
+const PASSWORD = 'chiiro2024';
+/* ================================================ */
 
-/* Contraseña del panel — cámbiala por la tuya    */
-const PASSWORD    = 'chiiro2024';
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DIAS=['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+let adminYear,adminMonth,selAdminDate,pendingDeleteId,todasReservas=[];
 
-/* Debe coincidir con la app del cliente           */
-const STORAGE_KEY = 'chiirominor_reservas';
+async function dbGet(path){ const r=await fetch(SUPABASE_URL+'/rest/v1/'+path,{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}); if(!r.ok) throw new Error(r.status); return r.json(); }
+async function dbDelete(id){ const r=await fetch(SUPABASE_URL+'/rest/v1/reservas?id=eq.'+id,{method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}); if(!r.ok) throw new Error(r.status); }
+function showLoad(t){ document.getElementById('loading-text').textContent=t; document.getElementById('loading').style.display='flex'; }
+function hideLoad(){ document.getElementById('loading').style.display='none'; }
 
-/* ================================================
-   FIN DATOS EDITABLES
-   ================================================ */
-
-const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const MESES_CORTO = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const DIAS  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
-
-let adminYear, adminMonth, selAdminDate, pendingDeleteId;
-
-/* ---- Auth ---- */
-function doLogin() {
-  const val = document.getElementById('pw-input').value;
-  if (val === PASSWORD) {
+function doLogin(){
+  if(document.getElementById('pw-input').value===PASSWORD){
     sessionStorage.setItem('chiiro_auth','1');
-    document.getElementById('screen-login').style.display  = 'none';
-    document.getElementById('screen-panel').style.display  = 'block';
+    document.getElementById('screen-login').style.display='none';
+    document.getElementById('screen-panel').style.display='block';
     initPanel();
-  } else {
-    document.getElementById('login-error').style.display = 'block';
-    document.getElementById('pw-input').value = '';
-  }
+  } else { document.getElementById('login-error').style.display='block'; document.getElementById('pw-input').value=''; }
 }
-function logout() {
-  sessionStorage.removeItem('chiiro_auth');
-  location.reload();
-}
+function logout(){ sessionStorage.removeItem('chiiro_auth'); location.reload(); }
 
-/* ---- Init ---- */
-function initPanel() {
-  const hoy = new Date();
-  adminYear  = hoy.getFullYear();
-  adminMonth = hoy.getMonth();
-  selAdminDate = hoy.toISOString().slice(0,10);
-  renderStats();
-  renderAdminCal();
-  renderDayList();
+async function initPanel(){
+  const hoy=new Date(); adminYear=hoy.getFullYear(); adminMonth=hoy.getMonth(); selAdminDate=hoy.toISOString().slice(0,10);
+  showLoad('Cargando reservas...');
+  await cargarTodasReservas();
+  hideLoad();
+  renderStats(); renderAdminCal(); renderDayList();
 }
+async function recargar(){ showLoad('Actualizando...'); await cargarTodasReservas(); hideLoad(); renderStats(); renderAdminCal(); renderDayList(); }
+async function cargarTodasReservas(){ try{ todasReservas=await dbGet('reservas?select=*&order=fecha.asc,hora.asc'); }catch(e){ todasReservas=[]; } }
 
-/* ---- Datos ---- */
-function getReservas() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
-}
-function saveReservas(all) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+function renderStats(){
+  const hoy=new Date().toISOString().slice(0,10), mes=new Date().toISOString().slice(0,7);
+  const hoyN=todasReservas.filter(r=>r.fecha===hoy).length, mesN=todasReservas.filter(r=>r.fecha.startsWith(mes)).length;
+  document.getElementById('stats-row').innerHTML=`<div class="stat-card"><div class="stat-num">${hoyN}</div><div class="stat-label">Citas hoy</div></div><div class="stat-card"><div class="stat-num">${mesN}</div><div class="stat-label">Este mes</div></div>`;
 }
 
-/* ---- Stats ---- */
-function renderStats() {
-  const all  = getReservas();
-  const hoy  = new Date().toISOString().slice(0,10);
-  const hoyN = all.filter(r => r.fecha === hoy).length;
-  const mes  = new Date().toISOString().slice(0,7);
-  const mesN = all.filter(r => r.fecha.startsWith(mes)).length;
-  document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${hoyN}</div><div class="stat-label">Citas hoy</div></div>
-    <div class="stat-card"><div class="stat-num">${mesN}</div><div class="stat-label">Este mes</div></div>`;
-}
-
-/* ---- Calendario admin ---- */
-function renderAdminCal() {
-  document.getElementById('admin-month-label').textContent = MESES[adminMonth] + ' ' + adminYear;
-  const all  = getReservas();
-  const grid = document.getElementById('admin-cal');
-  grid.innerHTML = '';
-  DIAS.forEach(d => { const el=document.createElement('div'); el.className='day-lbl'; el.textContent=d; grid.appendChild(el); });
-
-  let first = new Date(adminYear, adminMonth, 1).getDay();
-  first = first===0?6:first-1;
-  for(let i=0;i<first;i++){ const el=document.createElement('div'); el.className='cal-cell cal-empty'; grid.appendChild(el); }
-
-  const total = new Date(adminYear, adminMonth+1, 0).getDate();
-  const hoyStr = new Date().toISOString().slice(0,10);
-
+function renderAdminCal(){
+  document.getElementById('admin-month-label').textContent=MESES[adminMonth]+' '+adminYear;
+  const grid=document.getElementById('admin-cal'); grid.innerHTML='';
+  DIAS.forEach(d=>{const el=document.createElement('div');el.className='day-lbl';el.textContent=d;grid.appendChild(el);});
+  let first=new Date(adminYear,adminMonth,1).getDay(); first=first===0?6:first-1;
+  for(let i=0;i<first;i++){const el=document.createElement('div');el.className='cal-cell cal-empty';grid.appendChild(el);}
+  const total=new Date(adminYear,adminMonth+1,0).getDate(), hoyStr=new Date().toISOString().slice(0,10);
   for(let d=1;d<=total;d++){
-    const fecha = new Date(adminYear, adminMonth, d);
-    const key   = fecha.toISOString().slice(0,10);
-    const citas = all.filter(r => r.fecha === key);
-    const el = document.createElement('div');
-    el.className = 'cal-cell';
-    const isPast = key < hoyStr;
-    if(isPast) el.classList.add('cal-past');
-    if(key === hoyStr) el.classList.add('cal-today');
-    if(key === selAdminDate) el.classList.add('cal-active');
-
-    const dots = citas.length > 0
-      ? `<div class="cal-dot-wrap">${citas.slice(0,3).map(()=>'<div class="cal-dot"></div>').join('')}</div>`
-      : '';
-    el.innerHTML = `<span style="font-size:12px">${d}</span>${dots}`;
-    if(!isPast) el.onclick = () => { selAdminDate = key; renderAdminCal(); renderDayList(); };
+    const key=new Date(adminYear,adminMonth,d).toISOString().slice(0,10);
+    const citas=todasReservas.filter(r=>r.fecha===key);
+    const el=document.createElement('div'); el.className='cal-cell';
+    if(key<hoyStr) el.classList.add('cal-past');
+    if(key===hoyStr) el.classList.add('cal-today');
+    if(key===selAdminDate) el.classList.add('cal-active');
+    el.innerHTML=`<span style="font-size:12px">${d}</span>${citas.length?`<div class="cal-dot-wrap">${citas.slice(0,3).map(()=>'<div class="cal-dot"></div>').join('')}</div>`:''}`;
+    el.onclick=()=>{ selAdminDate=key; renderAdminCal(); renderDayList(); };
     grid.appendChild(el);
   }
 }
 function prevMonthAdmin(){ adminMonth--; if(adminMonth<0){adminMonth=11;adminYear--;} renderAdminCal(); }
 function nextMonthAdmin(){ adminMonth++; if(adminMonth>11){adminMonth=0;adminYear++;} renderAdminCal(); }
 
-/* ---- Listado del día ---- */
-function renderDayList() {
-  const all   = getReservas();
-  const citas = all.filter(r => r.fecha === selAdminDate).sort((a,b)=>a.hora.localeCompare(b.hora));
-  const fecha = new Date(selAdminDate + 'T12:00:00');
-  const hoyStr = new Date().toISOString().slice(0,10);
-  const esHoy  = selAdminDate === hoyStr;
-  document.getElementById('day-title').textContent = esHoy
-    ? 'Hoy · ' + fecha.toLocaleDateString('es-ES',{day:'numeric',month:'long'})
-    : fecha.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
-  document.getElementById('day-count').textContent = citas.length
-    ? citas.length + (citas.length===1?' cita':' citas')
-    : '';
-
-  const list = document.getElementById('day-list');
-  if (!citas.length) {
-    list.innerHTML = `<div class="empty-day"><div class="empty-icon">✦</div><div class="empty-label">Sin reservas este día</div></div>`;
-    return;
-  }
-  list.innerHTML = citas.map(r => `
-    <div class="reserva-card" id="card-${r.id}">
-      <div class="res-hora">${r.hora}</div>
-      <div class="res-plan">${r.plan}</div>
-      <div class="res-price">${r.precio}</div>
-      <div class="res-row"><span class="res-icon">👤</span><span class="res-txt">${r.nombre}</span></div>
-      <div class="res-row"><span class="res-icon">📞</span><span class="res-txt">${r.tlf}</span></div>
-      ${r.notas ? `<div class="res-row"><span class="res-icon">📝</span><span class="res-txt">${r.notas}</span></div>` : ''}
-      <div class="res-row"><span class="res-icon">⏱</span><span class="res-txt">${r.duracion}</span></div>
-      <div class="res-actions">
-        <div class="res-btn res-btn-cal" onclick="addCitaCalendar(${r.id})">📅 Calendario</div>
-        <div class="res-btn res-btn-del" onclick="askDelete(${r.id},'${r.nombre}','${r.hora}')">Cancelar</div>
-      </div>
-    </div>`).join('');
+function renderDayList(){
+  const citas=todasReservas.filter(r=>r.fecha===selAdminDate).sort((a,b)=>a.hora.localeCompare(b.hora));
+  const fecha=new Date(selAdminDate+'T12:00:00'), hoyStr=new Date().toISOString().slice(0,10);
+  document.getElementById('day-title').textContent=selAdminDate===hoyStr?'Hoy · '+fecha.toLocaleDateString('es-ES',{day:'numeric',month:'long'}):fecha.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('day-count').textContent=citas.length?(citas.length+(citas.length===1?' cita':' citas')):'';
+  const list=document.getElementById('day-list');
+  if(!citas.length){ list.innerHTML=`<div class="empty-day"><div class="empty-icon">✦</div><div class="empty-label">Sin reservas este día</div></div>`; return; }
+  list.innerHTML=citas.map(r=>`<div class="reserva-card" id="card-${r.id}"><div class="res-hora">${r.hora}</div><div class="res-plan">${r.plan}</div><div class="res-price">${r.precio}</div><div class="res-row"><span class="res-icon">👤</span><span class="res-txt">${r.nombre}</span></div><div class="res-row"><span class="res-icon">📞</span><span class="res-txt">${r.tlf}</span></div>${r.notas?`<div class="res-row"><span class="res-icon">📝</span><span class="res-txt">${r.notas}</span></div>`:''}<div class="res-row"><span class="res-icon">⏱</span><span class="res-txt">${r.duracion}</span></div><div class="res-actions"><div class="res-btn res-btn-cal" onclick="addCitaCalendar(${r.id})">📅 Calendario</div><div class="res-btn res-btn-del" onclick="askDelete(${r.id},'${r.nombre}','${r.hora}')">Cancelar</div></div></div>`).join('');
 }
 
-/* ---- Añadir al Calendario Apple ---- */
-function addCitaCalendar(id) {
-  const r = getReservas().find(x => x.id === id);
-  if (!r) return;
-  const [hh,mm] = r.hora.split(':').map(Number);
-  const inicio  = new Date(r.fecha + 'T' + r.hora + ':00');
-  const durMap  = { '60 min':60, '90 min':90, '45 min':45, '30 min':30 };
-  const mins    = durMap[r.duracion] || 60;
-  const fin     = new Date(inicio.getTime() + mins * 60000);
-  const fmt = d => d.toISOString().replace(/[-:.]/g,'').slice(0,15)+'Z';
-  const ics = [
-    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Chiirominor//ES',
-    'BEGIN:VEVENT',
-    'UID:'+r.id+'@chiirominor',
-    'DTSTART:'+fmt(inicio),
-    'DTEND:'+fmt(fin),
-    'SUMMARY:'+r.plan+' · '+r.nombre,
-    'DESCRIPTION:Cliente: '+r.nombre+'\\nTel: '+r.tlf+(r.notas?'\\nNotas: '+r.notas:'')+'\\nPrecio: '+r.precio,
-    'LOCATION:Chiirominor Centro de Masajes',
-    'END:VEVENT','END:VCALENDAR'
-  ].join('\r\n');
-  const blob = new Blob([ics],{type:'text/calendar;charset=utf-8'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = 'cita-'+r.nombre.replace(/\s+/g,'-')+'.ics';
-  a.click(); URL.revokeObjectURL(url);
+function addCitaCalendar(id){
+  const r=todasReservas.find(x=>x.id===id); if(!r) return;
+  const inicio=new Date(r.fecha+'T'+r.hora+':00');
+  const mins={'60 min':60,'90 min':90,'45 min':45,'30 min':30}[r.duracion]||60;
+  const fin=new Date(inicio.getTime()+mins*60000);
+  const fmt=d=>d.toISOString().replace(/[-:.]/g,'').slice(0,15)+'Z';
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Chiirominor//ES','BEGIN:VEVENT','UID:'+r.id+'@chiirominor','DTSTART:'+fmt(inicio),'DTEND:'+fmt(fin),'SUMMARY:'+r.plan+' · '+r.nombre,'DESCRIPTION:Cliente: '+r.nombre+'\\nTel: '+r.tlf+(r.notas?'\\nNotas: '+r.notas:'')+'\\nPrecio: '+r.precio,'LOCATION:Chiirominor Centro de Masajes','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'})); a.download='cita-'+r.nombre.replace(/\s+/g,'-')+'.ics'; a.click();
 }
 
-/* ---- Borrar reserva ---- */
-function askDelete(id, nombre, hora) {
-  pendingDeleteId = id;
-  document.getElementById('modal-text').textContent = `¿Cancelar la cita de ${nombre} a las ${hora}?`;
-  document.getElementById('modal-del').style.display = 'flex';
-}
-function closeModal()  { document.getElementById('modal-del').style.display = 'none'; pendingDeleteId = null; }
-function confirmDelete() {
-  if (!pendingDeleteId) return;
-  const all = getReservas().filter(r => r.id !== pendingDeleteId);
-  saveReservas(all);
-  closeModal();
-  renderStats();
-  renderAdminCal();
-  renderDayList();
+function askDelete(id,nombre,hora){ pendingDeleteId=id; document.getElementById('modal-text').textContent=`¿Cancelar la cita de ${nombre} a las ${hora}?`; document.getElementById('modal-del').style.display='flex'; }
+function closeModal(){ document.getElementById('modal-del').style.display='none'; pendingDeleteId=null; }
+async function confirmDelete(){
+  if(!pendingDeleteId) return;
+  showLoad('Cancelando reserva...');
+  try{ await dbDelete(pendingDeleteId); todasReservas=todasReservas.filter(r=>r.id!==pendingDeleteId); }
+  catch(e){ alert('Error al cancelar. Inténtalo de nuevo.'); }
+  hideLoad(); closeModal(); renderStats(); renderAdminCal(); renderDayList();
 }
 
-/* ---- Auto-login si ya hay sesión ---- */
-if (sessionStorage.getItem('chiiro_auth') === '1') {
-  document.getElementById('screen-login').style.display = 'none';
-  document.getElementById('screen-panel').style.display = 'block';
+if(sessionStorage.getItem('chiiro_auth')==='1'){
+  document.getElementById('screen-login').style.display='none';
+  document.getElementById('screen-panel').style.display='block';
   initPanel();
 }
 </script>
