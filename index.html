@@ -270,7 +270,7 @@ function horariosParaFecha(fecha) {
 }
 
 async function cargarHorasOcupadas(fecha) {
-  const key = fecha.toISOString().slice(0,10);
+  const key = `${fecha.getFullYear()}-${String(fecha.getMonth()+1).padStart(2,'0')}-${String(fecha.getDate()).padStart(2,'0')}`;
   try {
     const data = await dbGet('reservas?select=hora,dur_mins&fecha=eq.'+key);
     const bloqueadas = new Set();
@@ -347,7 +347,7 @@ async function goToConfirm() {
   const tlf    = document.getElementById('inp-phone').value.trim();
   if (!nombre || !tlf) return;
   const p   = PLANES[selPlan];
-  const key = selDate.toISOString().slice(0,10);
+  const key = `${selDate.getFullYear()}-${String(selDate.getMonth()+1).padStart(2,'0')}-${String(selDate.getDate()).padStart(2,'0')}`;
   showLoad('Guardando tu reserva...');
   document.getElementById('confirm-error').style.display = 'none';
   try {
@@ -399,7 +399,7 @@ function renderCal() {
   const total = new Date(calYear, calMonth+1, 0).getDate();
   const hoy = new Date(); hoy.setHours(0,0,0,0);
   for (let d=1; d<=total; d++) {
-    const fecha = new Date(calYear, calMonth, d);
+    const fecha = new Date(calYear, calMonth, d, 12, 0, 0);
     const el = document.createElement('div'); el.className='date-cell'; el.textContent=d;
     if (DIAS_CERRADOS.includes(fecha.getDay()) || fecha < hoy) {
       el.classList.add('disabled');
