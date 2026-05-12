@@ -7,12 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Chiirominor">
-  <meta name="theme-color" content="#1a1205">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%231a1205'/%3E%3Ctext x='60' y='78' font-size='58' text-anchor='middle' font-family='Georgia,serif' fill='%23c9a84c'%3E✦%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#54352e">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%2354352e'/%3E%3Ctext x='60' y='78' font-size='58' text-anchor='middle' font-family='Georgia,serif' fill='%239d786b'%3E✦%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
   :root {
     --dark:#54352e;
@@ -25,546 +24,93 @@
     --radius:10px;
     --radius-sm:8px;
   }
-
   * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-
-  body {
-    font-family:'Jost',sans-serif;
-    background:var(--cream);
-    min-height:100vh;
-    color:var(--dark);
-    overflow-x:hidden;
-  }
-
-  #app {
-    max-width:430px;
-    margin:0 auto;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    background:var(--cream);
-  }
-
-  .hero {
-    padding:56px 24px 54px;
-    background:var(--dark);
-    position:relative;
-    overflow:hidden;
-  }
-
-  .hero::before {
-    content:'';
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:-1px;
-    height:32px;
-    background:
-      linear-gradient(135deg, transparent 25px, var(--cream) 0) 0 0 / 78px 32px repeat-x,
-      linear-gradient(225deg, transparent 25px, var(--cream) 0) 39px 0 / 78px 32px repeat-x;
-  }
-
-  .hero::after {
-    display:none;
-  }
-
-  .hero-eyebrow {
-    font-size:13px;
-    font-weight:400;
-    letter-spacing:0;
-    text-transform:none;
-    color:#fff;
-    margin-bottom:18px;
-    opacity:1;
-  }
-
-  .hero-title {
-    font-family:'Jost',sans-serif;
-    font-size:36px;
-    font-weight:400;
-    color:#fff;
-    line-height:1.28;
-    margin-bottom:10px;
-  }
-
-  .hero-title em {
-    font-style:normal;
-    color:#fff;
-  }
-
-  .hero-sub {
-    font-size:13px;
-    font-weight:300;
-    color:rgba(255,255,255,0.78);
-    letter-spacing:0;
-    line-height:1.5;
-  }
-
-  .steps {
-    display:flex;
-    gap:6px;
-    padding:22px 24px 0;
-  }
-
-  .step-dot {
-    height:2px;
-    flex:1;
-    border-radius:2px;
-    background:rgba(84,53,46,0.16);
-    transition:background 0.3s;
-  }
-
-  .step-dot.active {
-    background:var(--dark);
-  }
-
-  .step-dot.done {
-    background:rgba(84,53,46,0.45);
-  }
-
-  .content {
-    flex:1;
-    padding:24px 24px 32px;
-  }
-
-  .section-label {
-    font-size:13px;
-    font-weight:400;
-    letter-spacing:0;
-    text-transform:none;
-    color:#000;
-    opacity:1;
-    margin-bottom:14px;
-  }
-
-  .back-btn {
-    background:none;
-    border:none;
-    color:var(--muted);
-    font-size:12px;
-    font-family:'Jost',sans-serif;
-    letter-spacing:0;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    margin-bottom:20px;
-    padding:0;
-    transition:color 0.2s;
-  }
-
-  .back-btn:hover {
-    color:var(--dark);
-  }
-
-  .plan-card {
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:18px 20px;
-    margin-bottom:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-    background:#fff;
-    position:relative;
-    overflow:hidden;
-  }
-
-  .plan-card::before {
-    display:none;
-  }
-
-  .plan-card:hover {
-    border-color:var(--dark);
-  }
-
-  .plan-card.selected {
-    border-color:var(--dark);
-    background:rgba(84,53,46,0.06);
-  }
-
-  .plan-row {
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:12px;
-  }
-
-  .plan-name {
-    font-family:'Jost',sans-serif;
-    font-size:19px;
-    font-weight:400;
-    color:var(--dark);
-    margin-bottom:4px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    flex-wrap:wrap;
-  }
-
-  .plan-badge {
-    font-family:'Jost',sans-serif;
-    font-size:9px;
-    font-weight:500;
-    letter-spacing:0;
-    text-transform:none;
-    padding:3px 8px;
-    border-radius:4px;
-    border:1px solid var(--gold);
-    color:#fff;
-    background:var(--gold);
-  }
-
-  .plan-desc {
-    font-size:12px;
-    font-weight:300;
-    color:var(--muted);
-    line-height:1.6;
-  }
-
-  .plan-price {
-    font-family:'Jost',sans-serif;
-    font-size:22px;
-    font-weight:400;
-    color:var(--dark);
-    white-space:nowrap;
-  }
-
-  .plan-dur {
-    font-size:10px;
-    font-weight:300;
-    color:var(--muted);
-    text-align:right;
-    margin-top:2px;
-    letter-spacing:0;
-  }
-
-  .month-nav {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:16px;
-  }
-
-  .month-title {
-    font-family:'Jost',sans-serif;
-    font-size:18px;
-    font-weight:400;
-    color:var(--dark);
-  }
-
-  .nav-btn {
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:4px;
-    width:32px;
-    height:32px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    color:var(--dark);
-    font-size:16px;
-    transition:all 0.15s;
-  }
-
-  .nav-btn:hover {
-    background:var(--dark);
-    color:#fff;
-  }
-
-  .cal-grid {
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:4px;
-  }
-
-  .day-label {
-    text-align:center;
-    font-size:9px;
-    font-weight:500;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:var(--muted);
-    padding:6px 0;
-  }
-
-  .date-cell {
-    aspect-ratio:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:4px;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:300;
-    color:var(--dark);
-    transition:all 0.15s;
-    border:1px solid transparent;
-  }
-
-  .date-cell:hover:not(.disabled) {
-    border-color:var(--border);
-    background:rgba(84,53,46,0.08);
-  }
-
-  .date-cell.disabled {
-    opacity:0.25;
-    cursor:not-allowed;
-    color:var(--muted);
-  }
-
-  .date-cell.today {
-    border-color:rgba(84,53,46,0.45);
-  }
-
-  .date-cell.selected-date {
-    background:var(--dark);
-    color:#fff;
-    font-weight:500;
-    border-color:var(--dark);
-  }
-
-  .time-grid {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-    margin-top:8px;
-  }
-
-  .time-btn {
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:12px 4px;
-    text-align:center;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:400;
-    color:var(--dark);
-    background:#fff;
-    transition:all 0.15s;
-    font-family:'Jost',sans-serif;
-  }
-
-  .time-btn:hover {
-    border-color:var(--dark);
-    color:var(--dark);
-  }
-
-  .time-btn.selected-time {
-    background:var(--dark);
-    color:#fff;
-    border-color:var(--dark);
-    font-weight:500;
-  }
-
-  .time-btn.ocupado {
-    opacity:0.25;
-    cursor:not-allowed;
-    text-decoration:line-through;
-  }
-
-  .form-group {
-    margin-bottom:14px;
-  }
-
-  .form-label {
-    display:block;
-    font-size:10px;
-    font-weight:500;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:6px;
-  }
-
-  .form-input {
-    width:100%;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:13px 16px;
-    font-size:14px;
-    font-weight:300;
-    font-family:'Jost',sans-serif;
-    color:var(--dark);
-    outline:none;
-    transition:border-color 0.2s;
-  }
-
-  .form-input::placeholder {
-    color:var(--muted);
-    opacity:0.6;
-  }
-
-  .form-input:focus {
-    border-color:var(--dark);
-  }
-
-  .summary-box {
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px 20px;
-    background:#fff;
-    margin:16px 0 0;
-  }
-
-  .summary-row {
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    padding:6px 0;
-    border-bottom:1px solid rgba(84,53,46,0.12);
-  }
-
-  .summary-row:last-child {
-    border-bottom:none;
-  }
-
-  .sum-label {
-    font-size:11px;
-    font-weight:400;
-    color:var(--muted);
-    letter-spacing:0;
-  }
-
-  .sum-val {
-    font-size:13px;
-    font-weight:400;
-    color:var(--dark);
-    text-align:right;
-    max-width:180px;
-    line-height:1.4;
-  }
-
-  .main-btn {
-    width:100%;
-    padding:16px;
-    background:var(--gold);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius);
-    font-size:13px;
-    font-weight:500;
-    font-family:'Jost',sans-serif;
-    letter-spacing:0;
-    text-transform:none;
-    cursor:pointer;
-    margin-top:20px;
-    transition:opacity 0.2s, transform 0.1s;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-  }
-
-  .main-btn:hover:not(:disabled) {
-    opacity:0.88;
-  }
-
-  .main-btn:active:not(:disabled) {
-    transform:scale(0.98);
-  }
-
-  .main-btn:disabled {
-    opacity:0.25;
-    cursor:not-allowed;
-  }
-
-  .success-screen {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    padding:40px 24px 32px;
-  }
-
-  .success-icon {
-    width:72px;
-    height:72px;
-    border:1px solid var(--dark);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:24px;
-    font-size:28px;
-    color:var(--dark);
-  }
-
-  .success-title {
-    font-family:'Jost',sans-serif;
-    font-size:30px;
-    font-weight:400;
-    color:var(--dark);
-    margin-bottom:10px;
-  }
-
-  .success-sub {
-    font-size:13px;
-    font-weight:300;
-    color:var(--muted);
-    line-height:1.7;
-    margin-bottom:32px;
-    max-width:280px;
-  }
-
-  .new-btn {
-    background:none;
-    border:none;
-    color:var(--muted);
-    font-size:12px;
-    font-family:'Jost',sans-serif;
-    letter-spacing:0;
-    cursor:pointer;
-    margin-top:16px;
-    text-transform:none;
-    transition:color 0.2s;
-  }
-
-  .new-btn:hover {
-    color:var(--dark);
-  }
-
-  .install-banner {
-    margin:16px 24px 0;
-    padding:12px 16px;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    display:flex;
-    gap:10px;
-    align-items:flex-start;
-  }
-
-  .install-text {
-    font-size:11px;
-    font-weight:300;
-    color:var(--muted);
-    line-height:1.6;
-  }
-
-  .install-text strong {
-    color:var(--dark);
-    font-weight:500;
-  }
-
-  .install-close {
-    background:none;
-    border:none;
-    color:var(--muted);
-    cursor:pointer;
-    font-size:18px;
-    padding:0 0 0 8px;
-    flex-shrink:0;
-  }
-</style>
-  
+  body { font-family:'Jost',sans-serif; background:var(--cream); min-height:100vh; color:var(--dark); overflow-x:hidden; }
+  #app { max-width:430px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; background:var(--cream); }
+  .hero { padding:56px 24px 54px; background:var(--dark); position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; left:0; right:0; bottom:-1px; height:32px; background: linear-gradient(135deg, transparent 25px, var(--cream) 0) 0 0 / 78px 32px repeat-x, linear-gradient(225deg, transparent 25px, var(--cream) 0) 39px 0 / 78px 32px repeat-x; }
+  .hero::after { display:none; }
+  .hero-eyebrow { font-size:13px; font-weight:400; color:#fff; margin-bottom:18px; opacity:1; }
+  .hero-title { font-family:'Jost',sans-serif; font-size:36px; font-weight:400; color:#fff; line-height:1.28; margin-bottom:10px; }
+  .hero-title em { font-style:normal; color:#fff; }
+  .hero-sub { font-size:13px; font-weight:300; color:rgba(255,255,255,0.78); line-height:1.5; }
+  .steps { display:flex; gap:6px; padding:22px 24px 0; }
+  .step-dot { height:2px; flex:1; border-radius:2px; background:rgba(84,53,46,0.16); transition:background 0.3s; }
+  .step-dot.active { background:var(--dark); }
+  .step-dot.done   { background:rgba(84,53,46,0.45); }
+  .content { flex:1; padding:24px 24px 32px; }
+  .section-label { font-size:13px; font-weight:400; color:#000; margin-bottom:14px; }
+  .back-btn { background:none; border:none; color:var(--muted); font-size:12px; font-family:'Jost',sans-serif; cursor:pointer; display:flex; align-items:center; gap:6px; margin-bottom:20px; padding:0; transition:color 0.2s; }
+  .back-btn:hover { color:var(--dark); }
+  .plan-card { border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; cursor:pointer; transition:all 0.2s; background:#fff; position:relative; overflow:hidden; }
+  .plan-card:hover { border-color:var(--dark); }
+  .plan-card.selected { border-color:var(--dark); background:rgba(84,53,46,0.06); }
+  .plan-row  { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .plan-name { font-family:'Jost',sans-serif; font-size:19px; font-weight:400; color:var(--dark); margin-bottom:4px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .plan-badge { font-size:9px; font-weight:500; padding:3px 8px; border-radius:4px; border:1px solid var(--gold); color:#fff; background:var(--gold); }
+  .plan-desc  { font-size:12px; font-weight:300; color:var(--muted); line-height:1.6; }
+  .plan-price { font-family:'Jost',sans-serif; font-size:22px; font-weight:400; color:var(--dark); white-space:nowrap; }
+  .month-nav   { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .month-title { font-family:'Jost',sans-serif; font-size:18px; font-weight:400; color:var(--dark); }
+  .nav-btn { background:#fff; border:1px solid var(--border); border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--dark); font-size:16px; transition:all 0.15s; }
+  .nav-btn:hover { background:var(--dark); color:#fff; }
+  .cal-grid  { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .day-label { text-align:center; font-size:9px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:var(--muted); padding:6px 0; }
+  .date-cell { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:4px; cursor:pointer; font-size:13px; font-weight:300; color:var(--dark); transition:all 0.15s; border:1px solid transparent; }
+  .date-cell:hover:not(.disabled) { border-color:var(--border); background:rgba(84,53,46,0.08); }
+  .date-cell.disabled      { opacity:0.25; cursor:not-allowed; color:var(--muted); }
+  .date-cell.today         { border-color:rgba(84,53,46,0.45); }
+  .date-cell.selected-date { background:var(--dark); color:#fff; font-weight:500; border-color:var(--dark); }
+  .time-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px; }
+  .time-btn  { border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 4px; text-align:center; cursor:pointer; font-size:13px; font-weight:400; color:var(--dark); background:#fff; transition:all 0.15s; font-family:'Jost',sans-serif; }
+  .time-btn:hover         { border-color:var(--dark); }
+  .time-btn.selected-time { background:var(--dark); color:#fff; border-color:var(--dark); font-weight:500; }
+  .time-btn.ocupado       { opacity:0.25; cursor:not-allowed; text-decoration:line-through; pointer-events:none; }
+  .form-group { margin-bottom:14px; }
+  .form-label { display:block; font-size:10px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .form-input { width:100%; background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 16px; font-size:14px; font-weight:300; font-family:'Jost',sans-serif; color:var(--dark); outline:none; transition:border-color 0.2s; }
+  .form-input::placeholder { color:var(--muted); opacity:0.6; }
+  .form-input:focus { border-color:var(--dark); }
+  .summary-box { border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; background:#fff; margin:16px 0 0; }
+  .summary-row { display:flex; justify-content:space-between; align-items:flex-start; padding:6px 0; border-bottom:1px solid rgba(84,53,46,0.12); }
+  .summary-row:last-child { border-bottom:none; }
+  .sum-label { font-size:11px; font-weight:400; color:var(--muted); }
+  .sum-val   { font-size:13px; font-weight:400; color:var(--dark); text-align:right; max-width:180px; line-height:1.4; }
+  .main-btn { width:100%; padding:16px; background:var(--gold); color:#fff; border:none; border-radius:var(--radius); font-size:13px; font-weight:500; font-family:'Jost',sans-serif; cursor:pointer; margin-top:20px; transition:opacity 0.2s,transform 0.1s; display:flex; align-items:center; justify-content:center; gap:10px; }
+  .main-btn:hover:not(:disabled) { opacity:0.88; }
+  .main-btn:active:not(:disabled) { transform:scale(0.98); }
+  .main-btn:disabled { opacity:0.25; cursor:not-allowed; }
+  .success-screen { display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 24px 32px; }
+  .success-icon  { width:72px; height:72px; border:1px solid var(--dark); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:28px; color:var(--dark); }
+  .success-title { font-family:'Jost',sans-serif; font-size:30px; font-weight:400; color:var(--dark); margin-bottom:10px; }
+  .success-sub   { font-size:13px; font-weight:300; color:var(--muted); line-height:1.7; margin-bottom:32px; max-width:280px; }
+  .new-btn { background:none; border:none; color:var(--muted); font-size:12px; font-family:'Jost',sans-serif; cursor:pointer; margin-top:16px; transition:color 0.2s; }
+  .new-btn:hover { color:var(--dark); }
+  .install-banner { margin:16px 24px 0; padding:12px 16px; background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); display:flex; gap:10px; align-items:flex-start; }
+  .install-text { font-size:11px; font-weight:300; color:var(--muted); line-height:1.6; }
+  .install-text strong { color:var(--dark); font-weight:500; }
+  .install-close { background:none; border:none; color:var(--muted); cursor:pointer; font-size:18px; padding:0 0 0 8px; }
+  .loading-overlay { position:fixed; inset:0; background:rgba(244,244,244,0.9); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:200; gap:16px; }
+  .spinner { width:32px; height:32px; border:2px solid rgba(84,53,46,0.15); border-top-color:var(--dark); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-text { font-size:12px; color:var(--muted); letter-spacing:1px; }
+  .error-msg { background:rgba(200,91,78,0.07); border:1px solid rgba(200,91,78,0.3); border-radius:var(--radius-sm); padding:12px 16px; font-size:12px; color:#c85b4e; margin-top:12px; text-align:center; display:none; }
+  .cancel-notice { background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 16px; font-size:12px; color:var(--muted); margin-top:12px; line-height:1.6; }
+  .cancel-notice strong { color:var(--dark); }
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:100; padding:24px; }
+  .modal-box   { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:24px; width:100%; max-width:320px; }
+  .modal-title { font-family:'Jost',sans-serif; font-size:20px; font-weight:400; color:var(--dark); margin-bottom:8px; }
+  .modal-sub   { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:20px; }
+  .modal-btns  { display:flex; gap:10px; }
+  .modal-cancel { flex:1; padding:12px; border:1px solid var(--border); border-radius:var(--radius-sm); background:none; color:var(--dark); font-family:'Jost',sans-serif; font-size:12px; cursor:pointer; }
+  .modal-del    { flex:1; padding:12px; border:1px solid rgba(200,91,78,0.5); border-radius:var(--radius-sm); background:rgba(200,91,78,0.1); color:#c85b4e; font-family:'Jost',sans-serif; font-size:12px; cursor:pointer; }
+  </style>
 </head>
 <body>
 <div id="app">
   <div class="hero">
     <div class="hero-eyebrow">Centro de masajes</div>
-    <div class="hero-title">Chiiro<em>minor</em></div>
+    <div class="hero-title">Chiirominor</div>
     <div class="hero-sub">Reserva tu sesión · Lunes a sábado</div>
   </div>
 
@@ -574,17 +120,19 @@
     <button class="install-close" onclick="document.getElementById('install-banner').style.display='none'">×</button>
   </div>
 
+  <!-- PASO 1: PLANES -->
   <div id="screen-plans">
-    <div class="steps" style="margin-top:16px"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="steps"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
     <div class="content">
-      <div class="section-label">Elige tu plan</div>
+      <div class="section-label">Elige tu sesión</div>
       <div id="plans-container"></div>
       <button class="main-btn" id="btn-plan" onclick="goToDate()" disabled>Elegir fecha →</button>
     </div>
   </div>
 
+  <!-- PASO 2: FECHA Y HORA -->
   <div id="screen-date" style="display:none">
-    <div class="steps" style="margin-top:16px"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="steps"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>
     <div class="content">
       <button class="back-btn" onclick="showScreen('plans')">← Volver</button>
       <div class="section-label">Elige una fecha</div>
@@ -603,8 +151,9 @@
     </div>
   </div>
 
+  <!-- PASO 3: DATOS -->
   <div id="screen-info" style="display:none">
-    <div class="steps" style="margin-top:16px"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div>
+    <div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div>
     <div class="content">
       <button class="back-btn" onclick="showScreen('date')">← Volver</button>
       <div class="section-label">Tus datos</div>
@@ -612,20 +161,44 @@
       <div class="form-group"><label class="form-label">Teléfono</label><input class="form-input" id="inp-phone" type="tel" placeholder="Ej: 612 345 678" oninput="checkInfo()"></div>
       <div class="form-group"><label class="form-label">Notas (opcional)</label><input class="form-input" id="inp-notes" type="text" placeholder="Alergias, preferencias..."></div>
       <div id="summary-box"></div>
+      <div class="cancel-notice">ℹ️ Puedes <strong>cancelar tu cita</strong> hasta <strong>24 horas antes</strong> desde esta misma app. Pasado ese plazo, contacta con nosotros directamente.</div>
       <div class="error-msg" id="confirm-error">Error al guardar la reserva. Inténtalo de nuevo.</div>
       <button class="main-btn" id="btn-info" onclick="goToConfirm()" disabled>Confirmar reserva →</button>
     </div>
   </div>
 
+  <!-- PASO 4: ÉXITO -->
   <div id="screen-success" style="display:none">
     <div class="success-screen">
-      <div class="success-icon">✦</div>
+      <div class="success-icon">✓</div>
       <div class="success-title">¡Todo listo!</div>
       <div class="success-sub" id="success-text"></div>
       <button class="new-btn" onclick="resetApp()">+ Nueva reserva</button>
     </div>
   </div>
 
+  <!-- CANCELAR CITA CLIENTE -->
+  <div id="screen-cancelar" style="display:none">
+    <div class="content" style="padding-top:40px">
+      <div class="section-label">Cancelar mi cita</div>
+      <div class="form-group"><label class="form-label">Tu teléfono</label><input class="form-input" id="cancel-phone" type="tel" placeholder="El que usaste al reservar" oninput="buscarReservaCliente()"></div>
+      <div id="cancel-results"></div>
+    </div>
+  </div>
+
+  <!-- MODAL CANCELAR CLIENTE -->
+  <div class="modal-overlay" id="modal-cancel" style="display:none">
+    <div class="modal-box">
+      <div class="modal-title">Cancelar cita</div>
+      <div class="modal-sub" id="modal-cancel-text"></div>
+      <div class="modal-btns">
+        <button class="modal-cancel" onclick="closeModalCancel()">Mantener</button>
+        <button class="modal-del"    onclick="confirmarCancelCliente()">Cancelar cita</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
   <div class="loading-overlay" id="loading" style="display:none">
     <div class="spinner"></div>
     <div class="loading-text" id="loading-text">Cargando...</div>
@@ -637,107 +210,312 @@
    CONFIGURACIÓN SUPABASE
    ================================================ */
 const SUPABASE_URL = 'https://uxztzrjthivtujmpwfzb.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_t_gvrWRb5ebhPfKLenDcjg_AmAPzQ92';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4enR6cmp0aGl2dHVqbXB3ZnpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNTk5NzQsImV4cCI6MjA5MzczNTk3NH0.HsYXZK35lSwzJwHsvx2sRWFFt-VwSU17LxUB2CP_zKY';
 
 /* ================================================
    DATOS EDITABLES
    ================================================ */
 const PLANES = [
-  { nombre:'Masaje relajante',    desc:'Alivio del estrés con aceites aromáticos y música suave. Perfecto para descansar cuerpo y mente.',     precio:'45 €', duracion:'60 min', durMins:60, badge:'' },
-  { nombre:'Masaje deportivo',    desc:'Recuperación muscular profunda. Ideal tras ejercicio intenso o para aliviar contracturas.',             precio:'55 €', duracion:'60 min', durMins:60, badge:'Popular' },
-  { nombre:'Experiencia premium', desc:'Masaje completo con piedras calientes, aromaterapia y envoltura corporal relajante.',                   precio:'85 €', duracion:'90 min', durMins:90, badge:'Premium' }
+  { nombre:'Masaje',    desc:'Linfático, descontracturante, antiestrés, etc', duracion:'1 hora',  dur_mins:60,  badge:'' },
+  { nombre:'Tratamiento corporal',    desc:'Presoterapia y maderoterapia', duracion:'1 hora',  dur_mins:60,  badge:'' },
+  { nombre:'Tratamiento radio frecuencia', desc:'Woodterapirf', duracion:'2 horas', dur_mins:120, badge:'' }
 ];
-const HORARIOS      = ['09:00','10:00','11:00','12:00','13:00','16:00','17:00','18:00','19:00'];
-const DIAS_CERRADOS = [0]; // 0=Domingo
+
+const HORARIOS_BASE  = ['09:00','10:00','11:00','12:00','13:00','16:00','17:00','18:00','19:00', '20:00'];
+const HORARIOS_LUNES = ['11:00','12:00','13:00','16:00','17:00','18:00','19:00', '20:00'];
+const DIAS_CERRADOS  = [0]; // 0 = Domingo
 /* ================================================ */
 
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DIAS  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
-let selPlan=null, selDate=null, selTime=null, calYear, calMonth, horasCache=[];
+let selPlan=null, selDate=null, selTime=null, calYear, calMonth, horasCache=[], pendingCancelId=null;
 
+/* ---- API ---- */
 async function dbGet(path) {
-  const r = await fetch(SUPABASE_URL+'/rest/v1/'+path, { headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY} });
-  if(!r.ok) throw new Error(r.status);
+  const r = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY }
+  });
+  if (!r.ok) { const t=await r.text(); throw new Error(t); }
   return r.json();
 }
+
 async function dbPost(path, body) {
-  const r = await fetch(SUPABASE_URL+'/rest/v1/'+path, { method:'POST', headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify(body) });
-  if(!r.ok) throw new Error(r.status);
+  const r = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer '+SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) { const t=await r.text(); throw new Error(t); }
+}
+
+async function dbDelete(id) {
+  const r = await fetch(SUPABASE_URL+'/rest/v1/reservas?id=eq.'+id, {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY }
+  });
+  if (!r.ok) { const t=await r.text(); throw new Error(t); }
 }
 
 function showLoad(t) { document.getElementById('loading-text').textContent=t; document.getElementById('loading').style.display='flex'; }
 function hideLoad()  { document.getElementById('loading').style.display='none'; }
-function showScreen(n) { ['plans','date','info','success'].forEach(id=>document.getElementById('screen-'+id).style.display=id===n?'block':'none'); window.scrollTo(0,0); }
+function showScreen(n) { ['plans','date','info','success','cancelar'].forEach(id => document.getElementById('screen-'+id).style.display = id===n?'block':'none'); window.scrollTo(0,0); }
+
+function horariosParaFecha(fecha) {
+  return fecha.getDay()===1 ? HORARIOS_LUNES : HORARIOS_BASE;
+}
+
+async function cargarHorasOcupadas(fecha) {
+  const key = fecha.toISOString().slice(0,10);
+  try {
+    const data = await dbGet('reservas?select=hora,dur_mins&fecha=eq.'+key);
+    const bloqueadas = new Set();
+    const horarios = horariosParaFecha(fecha);
+    data.forEach(r => {
+      bloqueadas.add(r.hora);
+      if (r.dur_mins >= 120) {
+        const idx = horarios.indexOf(r.hora);
+        if (idx !== -1 && idx+1 < horarios.length) bloqueadas.add(horarios[idx+1]);
+      }
+    });
+    horasCache = [...bloqueadas];
+  } catch(e) {
+    horasCache = [];
+    document.getElementById('time-error').style.display = 'block';
+  }
+}
+
+function horasDisponibles2h(fecha) {
+  const horarios = horariosParaFecha(fecha);
+  return horarios.filter((h,i) => {
+    if (horasCache.includes(h)) return false;
+    if (i+1 >= horarios.length) return false;
+    if (horasCache.includes(horarios[i+1])) return false;
+    return true;
+  });
+}
 
 function init() {
-  const hoy=new Date(); calYear=hoy.getFullYear(); calMonth=hoy.getMonth();
+  const hoy = new Date();
+  calYear = hoy.getFullYear(); calMonth = hoy.getMonth();
   renderPlanes(); renderCal();
-  if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!navigator.standalone) document.getElementById('install-banner').style.display='flex';
+  if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !navigator.standalone)
+    document.getElementById('install-banner').style.display = 'flex';
+  if (location.search.includes('cancelar')) showScreen('cancelar');
 }
 
 function renderPlanes() {
-  const c=document.getElementById('plans-container'); c.innerHTML='';
-  PLANES.forEach((p,i)=>{ const d=document.createElement('div'); d.className='plan-card'; d.onclick=()=>elegirPlan(i);
-    d.innerHTML=`<div class="plan-row"><div style="flex:1"><div class="plan-name">${p.nombre}${p.badge?`<span class="plan-badge">${p.badge}</span>`:''}</div><div class="plan-desc">${p.desc}</div></div><div style="text-align:right;min-width:64px;padding-left:12px"><div class="plan-price">${p.precio}</div><div class="plan-dur">${p.duracion}</div></div></div>`;
-    c.appendChild(d); });
+  const c = document.getElementById('plans-container'); c.innerHTML = '';
+  PLANES.forEach((p,i) => {
+    const d = document.createElement('div');
+    d.className = 'plan-card';
+    d.onclick = () => elegirPlan(i);
+    d.innerHTML = `<div class="plan-row">
+      <div style="flex:1">
+        <div class="plan-name">${p.nombre}${p.badge?`<span class="plan-badge">${p.badge}</span>`:''}</div>
+        <div class="plan-desc">${p.desc}</div>
+      </div>
+      <div style="text-align:right;min-width:64px;padding-left:12px">
+        <div class="plan-price">${p.duracion}</div>
+      </div>
+    </div>`;
+    c.appendChild(d);
+  });
 }
-function elegirPlan(i) { selPlan=i; document.querySelectorAll('.plan-card').forEach((c,idx)=>c.classList.toggle('selected',idx===i)); document.getElementById('btn-plan').disabled=false; }
-function goToDate()  { showScreen('date'); }
-function goToInfo()  { if(selDate&&selTime){ renderResumen(); showScreen('info'); } }
-function checkInfo() { document.getElementById('btn-info').disabled=!(document.getElementById('inp-name').value.trim()&&document.getElementById('inp-phone').value.trim()); }
+
+function elegirPlan(i) {
+  selPlan = i;
+  document.querySelectorAll('.plan-card').forEach((c,idx) => c.classList.toggle('selected', idx===i));
+  document.getElementById('btn-plan').disabled = false;
+}
+
+function goToDate() { showScreen('date'); }
+function goToInfo() { if (selDate && selTime) { renderResumen(); showScreen('info'); } }
+function checkInfo() {
+  document.getElementById('btn-info').disabled = !(
+    document.getElementById('inp-name').value.trim() &&
+    document.getElementById('inp-phone').value.trim()
+  );
+}
 
 async function goToConfirm() {
-  const nombre=document.getElementById('inp-name').value.trim(), tlf=document.getElementById('inp-phone').value.trim();
-  if(!nombre||!tlf) return;
-  const p=PLANES[selPlan], key=selDate.toISOString().slice(0,10);
+  const nombre = document.getElementById('inp-name').value.trim();
+  const tlf    = document.getElementById('inp-phone').value.trim();
+  if (!nombre || !tlf) return;
+  const p   = PLANES[selPlan];
+  const key = selDate.toISOString().slice(0,10);
   showLoad('Guardando tu reserva...');
-  document.getElementById('confirm-error').style.display='none';
+  document.getElementById('confirm-error').style.display = 'none';
   try {
-    await dbPost('reservas',{fecha:key,hora:selTime,plan:p.nombre,precio:p.precio,duracion:p.duracion,nombre,tlf,notas:document.getElementById('inp-notes').value.trim()});
+    await dbPost('reservas', {
+      fecha:    key,
+      hora:     selTime,
+      plan:     p.nombre,
+      duracion: p.duracion,
+      dur_mins: p.dur_mins,
+      nombre:   nombre,
+      tlf:      tlf,
+      notas:    document.getElementById('inp-notes').value.trim()
+    });
     hideLoad();
-    const ds=selDate.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
-    document.getElementById('success-text').innerHTML=`<strong style="color:#f5f0e8">${nombre}</strong>, tu cita para<br><strong style="color:#f5f0e8">${p.nombre}</strong><br>el ${ds} a las <strong style="color:#f5f0e8">${selTime}</strong><br>está confirmada. ¡Hasta pronto!`;
+    const ds = selDate.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
+    document.getElementById('success-text').innerHTML =
+      `<strong style="color:var(--dark)">${nombre}</strong>, tu cita para<br>
+       <strong style="color:var(--dark)">${p.nombre}</strong><br>
+       el ${ds} a las <strong style="color:var(--dark)">${selTime}</strong><br>
+       está confirmada. ¡Hasta pronto!<br><br>
+       <span style="font-size:11px">Recuerda: puedes cancelar hasta 24h antes.</span>`;
     showScreen('success');
-  } catch(e) { hideLoad(); document.getElementById('confirm-error').style.display='block'; }
+  } catch(e) {
+    hideLoad();
+    console.error('Error reserva:', e.message);
+    document.getElementById('confirm-error').style.display = 'block';
+  }
 }
 
 function renderResumen() {
-  const p=PLANES[selPlan], ds=selDate.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('summary-box').innerHTML=`<div class="summary-box"><div class="summary-row"><span class="sum-label">Plan</span><span class="sum-val">${p.nombre}</span></div><div class="summary-row"><span class="sum-label">Precio</span><span class="sum-val">${p.precio}</span></div><div class="summary-row"><span class="sum-label">Duración</span><span class="sum-val">${p.duracion}</span></div><div class="summary-row"><span class="sum-label">Fecha</span><span class="sum-val">${ds}</span></div><div class="summary-row"><span class="sum-label">Hora</span><span class="sum-val">${selTime}</span></div></div>`;
+  const p  = PLANES[selPlan];
+  const ds = selDate.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  document.getElementById('summary-box').innerHTML = `
+    <div class="summary-box">
+      <div class="summary-row"><span class="sum-label">Sesión</span><span class="sum-val">${p.nombre}</span></div>
+      <div class="summary-row"><span class="sum-label">Duración</span><span class="sum-val">${p.duracion}</span></div>
+      <div class="summary-row"><span class="sum-label">Fecha</span><span class="sum-val">${ds}</span></div>
+      <div class="summary-row"><span class="sum-label">Hora</span><span class="sum-val">${selTime}</span></div>
+    </div>`;
 }
 
 function renderCal() {
-  document.getElementById('month-label').textContent=MESES[calMonth]+' '+calYear;
-  const grid=document.getElementById('cal-grid'); grid.innerHTML='';
-  DIAS.forEach(d=>{const el=document.createElement('div');el.className='day-label';el.textContent=d;grid.appendChild(el);});
-  let first=new Date(calYear,calMonth,1).getDay(); first=first===0?6:first-1;
-  for(let i=0;i<first;i++){const el=document.createElement('div');el.className='date-cell disabled';grid.appendChild(el);}
-  const total=new Date(calYear,calMonth+1,0).getDate(), hoy=new Date(); hoy.setHours(0,0,0,0);
-  for(let d=1;d<=total;d++){
-    const fecha=new Date(calYear,calMonth,d), el=document.createElement('div'); el.className='date-cell'; el.textContent=d;
-    if(DIAS_CERRADOS.includes(fecha.getDay())||fecha<hoy) el.classList.add('disabled');
-    else { if(fecha.getTime()===hoy.getTime()) el.classList.add('today'); if(selDate&&fecha.getTime()===selDate.getTime()) el.classList.add('selected-date'); el.onclick=()=>elegirFecha(fecha,el); }
+  document.getElementById('month-label').textContent = MESES[calMonth]+' '+calYear;
+  const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
+  DIAS.forEach(d => { const el=document.createElement('div'); el.className='day-label'; el.textContent=d; grid.appendChild(el); });
+  let first = new Date(calYear, calMonth, 1).getDay();
+  first = first===0 ? 6 : first-1;
+  for (let i=0; i<first; i++) { const el=document.createElement('div'); el.className='date-cell disabled'; grid.appendChild(el); }
+  const total = new Date(calYear, calMonth+1, 0).getDate();
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  for (let d=1; d<=total; d++) {
+    const fecha = new Date(calYear, calMonth, d);
+    const el = document.createElement('div'); el.className='date-cell'; el.textContent=d;
+    if (DIAS_CERRADOS.includes(fecha.getDay()) || fecha < hoy) {
+      el.classList.add('disabled');
+    } else {
+      if (fecha.getTime()===hoy.getTime()) el.classList.add('today');
+      if (selDate && fecha.getTime()===selDate.getTime()) el.classList.add('selected-date');
+      el.onclick = () => elegirFecha(fecha, el);
+    }
     grid.appendChild(el);
   }
 }
-async function elegirFecha(fecha,el) {
-  selDate=fecha; selTime=null;
-  document.querySelectorAll('.date-cell.selected-date').forEach(c=>c.classList.remove('selected-date')); el.classList.add('selected-date');
-  document.getElementById('btn-date').disabled=true; document.getElementById('time-error').style.display='none';
+
+async function elegirFecha(fecha, el) {
+  selDate = fecha; selTime = null;
+  document.querySelectorAll('.date-cell.selected-date').forEach(c => c.classList.remove('selected-date'));
+  el.classList.add('selected-date');
+  document.getElementById('btn-date').disabled = true;
+  document.getElementById('time-error').style.display = 'none';
   showLoad('Comprobando disponibilidad...');
-  try { const data=await dbGet('reservas?select=hora&fecha=eq.'+fecha.toISOString().slice(0,10)); horasCache=data.map(r=>r.hora); } catch(e){ horasCache=[]; document.getElementById('time-error').style.display='block'; }
-  hideLoad(); renderHorarios();
+  await cargarHorasOcupadas(fecha);
+  hideLoad();
+  renderHorarios();
 }
-function prevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal();}
-function nextMonth(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal();}
+
+function prevMonth() { calMonth--; if (calMonth<0) { calMonth=11; calYear--; } renderCal(); }
+function nextMonth() { calMonth++; if (calMonth>11) { calMonth=0; calYear++; } renderCal(); }
+
 function renderHorarios() {
-  const grid=document.getElementById('time-grid'); grid.innerHTML='';
-  HORARIOS.forEach(h=>{ const btn=document.createElement('div'), ocupado=horasCache.includes(h);
-    btn.className='time-btn'+(selTime===h?' selected-time':'')+(ocupado?' ocupado':''); btn.textContent=h;
-    if(!ocupado) btn.onclick=()=>elegirHora(h); grid.appendChild(btn); });
+  const grid = document.getElementById('time-grid'); grid.innerHTML = '';
+  const horarios = horariosParaFecha(selDate);
+  const es2h = selPlan !== null && PLANES[selPlan].dur_mins === 120;
+  const disponibles2h = es2h ? horasDisponibles2h(selDate) : null;
+
+  // Si es hoy, bloquear horas pasadas (con 1h de margen)
+  const ahora = new Date();
+  const _hl = `${ahora.getFullYear()}-${String(ahora.getMonth()+1).padStart(2,'0')}-${String(ahora.getDate()).padStart(2,'0')}`; const _sl = `${selDate.getFullYear()}-${String(selDate.getMonth()+1).padStart(2,'0')}-${String(selDate.getDate()).padStart(2,'0')}`; const esHoy = _sl === _hl;
+  const horaLimite = ahora.getHours() + ahora.getMinutes()/60 + 1; // +1h de margen
+
+  horarios.forEach(h => {
+    const [hh, mm] = h.split(':').map(Number);
+    const horaNum = hh + mm/60;
+    const yaPaso = esHoy && horaNum < horaLimite;
+    const ocupado = es2h ? !disponibles2h.includes(h) : horasCache.includes(h);
+    const btn = document.createElement('div');
+    btn.className = 'time-btn' + (selTime===h ? ' selected-time' : '') + (ocupado||yaPaso ? ' ocupado' : '');
+    btn.textContent = h;
+    if (!ocupado && !yaPaso) btn.onclick = () => elegirHora(h);
+    grid.appendChild(btn);
+  });
 }
-function elegirHora(h) { selTime=h; document.querySelectorAll('.time-btn:not(.ocupado)').forEach(b=>b.classList.toggle('selected-time',b.textContent===h)); document.getElementById('btn-date').disabled=false; }
-function resetApp() { selPlan=null;selDate=null;selTime=null;horasCache=[]; ['inp-name','inp-phone','inp-notes'].forEach(id=>document.getElementById(id).value=''); document.getElementById('btn-plan').disabled=true; document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected')); init(); showScreen('plans'); }
+
+function elegirHora(h) {
+  selTime = h;
+  document.querySelectorAll('.time-btn:not(.ocupado)').forEach(b => b.classList.toggle('selected-time', b.textContent===h));
+  document.getElementById('btn-date').disabled = false;
+}
+
+/* ---- CANCELAR CITA CLIENTE ---- */
+let cancelTimer = null;
+function buscarReservaCliente() {
+  clearTimeout(cancelTimer);
+  cancelTimer = setTimeout(async () => {
+    const tlf = document.getElementById('cancel-phone').value.trim();
+    const res = document.getElementById('cancel-results');
+    if (tlf.length < 9) { res.innerHTML = ''; return; }
+    showLoad('Buscando reservas...');
+    try {
+      const data = await dbGet('reservas?select=*&tlf=eq.'+encodeURIComponent(tlf)+'&order=fecha.asc,hora.asc');
+      hideLoad();
+      const ahora = new Date();
+      if (!data.length) { res.innerHTML = `<div style="font-size:13px;color:var(--muted);padding:16px 0">No encontramos reservas con ese teléfono.</div>`; return; }
+      res.innerHTML = data.map(r => {
+        const fechaHora = new Date(r.fecha+'T'+r.hora+':00');
+        const diffHoras = (fechaHora - ahora) / 3600000;
+        const puedeCancel = diffHoras >= 24;
+        const ds = fechaHora.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
+        return `<div class="summary-box" style="margin-bottom:10px">
+          <div class="summary-row"><span class="sum-label">Sesión</span><span class="sum-val">${r.plan}</span></div>
+          <div class="summary-row"><span class="sum-label">Fecha</span><span class="sum-val">${ds}</span></div>
+          <div class="summary-row"><span class="sum-label">Hora</span><span class="sum-val">${r.hora}</span></div>
+          <div style="margin-top:12px">
+            ${puedeCancel
+              ? `<button class="main-btn" style="margin-top:0" onclick="pedirCancelCliente(${r.id},'${r.plan}','${ds}','${r.hora}')">Cancelar esta cita</button>`
+              : `<div style="font-size:12px;color:#c85b4e;background:rgba(200,91,78,0.07);border:1px solid rgba(200,91,78,0.2);border-radius:var(--radius-sm);padding:10px 12px">No se puede cancelar online. Quedan menos de 24h. Contacta con nosotros directamente.</div>`
+            }
+          </div>
+        </div>`;
+      }).join('');
+    } catch(e) { hideLoad(); res.innerHTML = `<div style="font-size:13px;color:#c85b4e;padding:16px 0">Error al buscar. Comprueba tu conexión.</div>`; }
+  }, 600);
+}
+
+function pedirCancelCliente(id, plan, fecha, hora) {
+  pendingCancelId = id;
+  document.getElementById('modal-cancel-text').textContent = `¿Cancelar tu cita de ${plan} el ${fecha} a las ${hora}?`;
+  document.getElementById('modal-cancel').style.display = 'flex';
+}
+function closeModalCancel() { document.getElementById('modal-cancel').style.display = 'none'; pendingCancelId = null; }
+async function confirmarCancelCliente() {
+  if (!pendingCancelId) return;
+  showLoad('Cancelando...');
+  try {
+    await dbDelete(pendingCancelId);
+    hideLoad(); closeModalCancel();
+    document.getElementById('cancel-phone').value = '';
+    document.getElementById('cancel-results').innerHTML = `<div style="font-size:13px;color:var(--dark);padding:16px 0">✓ Cita cancelada correctamente.</div>`;
+  } catch(e) { hideLoad(); alert('Error al cancelar. Inténtalo de nuevo.'); }
+}
+
+function resetApp() {
+  selPlan=null; selDate=null; selTime=null; horasCache=[];
+  ['inp-name','inp-phone','inp-notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('btn-plan').disabled = true;
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  init(); showScreen('plans');
+}
 
 init();
 </script>
