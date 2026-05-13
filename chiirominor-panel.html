@@ -8,6 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Panel Chiiro">
   <meta name="theme-color" content="#54352e">
+  <link rel="apple-touch-icon" href="iconoNegro.jpeg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -177,8 +178,10 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 /* ================================================
    DATOS EDITABLES
    ================================================ */
-const HORARIOS_BASE  = ['09:00','10:00','11:00','12:00','13:00','16:00','17:00','18:00','19:00', '20:00'];
-const HORARIOS_LUNES = ['11:00','12:00','13:00','16:00','17:00','18:00','19:00', '20:00'];
+const HORARIOS_BASE  = ['09:00','10:00','11:00','12:00','13:00','15:00','17:00','18:00','19:00'];
+const HORARIOS_LUNES = ['11:00','12:00','13:00','15:00','17:00','18:00','19:00'];
+const HORARIO_SABADO = ['10:30', '11:00', '12:00', '12:30']
+const DIAS_CERRADOS  = [0]; // 0 = Domingo
 /* ================================================ */
 
 const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -298,8 +301,11 @@ function renderDayList() {
 /* ---- EDITAR ---- */
 function horariosParaFechaStr(fechaStr) {
   const d = new Date(fechaStr+'T12:00:00');
-  return d.getDay()===1 ? HORARIOS_LUNES : HORARIOS_BASE;
+  if (d.getDay()===1) return HORARIOS_LUNES;
+  if (d.getDay()===6) return HORARIO_SABADO;
+  return HORARIOS_BASE;
 }
+
 function poblarHorasEdit(fechaStr, horaActual) {
   const horarios = horariosParaFechaStr(fechaStr);
   const sel = document.getElementById('edit-hora');
